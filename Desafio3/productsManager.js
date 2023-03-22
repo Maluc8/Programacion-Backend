@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+import fs from "fs/promises";
 
 async function readFile(path) {
   try {
@@ -89,49 +89,5 @@ class productManager {
     saveData(this.path, JSON.stringify(this.products));
   }
 }
-/* 
-#############################################################
-      Zona de pruebas
-#############################################################
-*/
 
-const main = async () => {
-  let manager = new productManager();
-
-  await manager.loadProducts();
-
-  await manager.addProduct(
-    "Celular",
-    "Moto G7",
-    20000,
-    "/images/motog7.jpg",
-    123460,
-    10
-  );
-
-  await manager.addProduct(
-    "Celular",
-    "Samsung J7",
-    15000,
-    "/images/samsungj7.png",
-    123461,
-    20
-  );
-
-  console.log(manager.getProducts());
-
-  manager.updateProduct({
-    id: 2,
-    title: "Celular",
-    description: "Samsung J7",
-    price: 15000,
-    thumbnail: "/images/samsungj7.png",
-    code: 123461,
-    stock: 50,
-  });
-  console.log("Modificado: \n", manager.getProductsById(2));
-  manager.deleteProduct(1);
-  console.log("Productos despues de la eliminacion: \n", manager.getProducts());
-};
-
-main();
+export { productManager };

@@ -1,8 +1,9 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import { productManager } from "./productsManager.js";
 
 const app = express();
 const manager = new productManager();
+app.use(express.urlencoded({ extended: true }));
 
 app.get(`/products`, async (req, res) => {
   try {
@@ -10,7 +11,13 @@ app.get(`/products`, async (req, res) => {
   } catch (e) {
     console.error(e);
   }
-  res.send(manager.getProducts());
+
+  if (req.query.hasOwnProperty(`limit`)) {
+    const limite = +req.query.limit;
+    res.send(manager.getProducts().slice(0, limite));
+  } else {
+    res.send(manager.getProducts());
+  }
 });
 
 app.listen(3000, () => {

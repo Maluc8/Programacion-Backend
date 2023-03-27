@@ -75,7 +75,9 @@ class productManager {
   }
 
   getProductsById(id) {
-    return this.products.find((element) => element.id == id) || "Not found";
+    return (
+      this.products.find((element) => element.id == id) || "Product not found"
+    );
   }
 
   updateProduct(prod) {
